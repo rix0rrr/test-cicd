@@ -1,6 +1,0 @@
-{
-  "app": "npx ts-node bin/cdkpipelines-demo.ts",
-  "context": {
-    "@aws-cdk/core:newStyleStackSynthesis": true
-  }
-}
