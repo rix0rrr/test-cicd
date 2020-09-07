@@ -31,7 +31,7 @@ export class TestCicdStack extends cdk.Stack {
     pipeline.addApplicationStage(new SomeStage(this, 'Steesj', {
       env: {
         account: '561462023695',
-        region: 'us-east-2',
+        region: 'eu-west-1',
       },
     }));
   }
