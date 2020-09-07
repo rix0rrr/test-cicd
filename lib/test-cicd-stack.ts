@@ -1,8 +1,8 @@
 import * as cdk from '@aws-cdk/core';
 import * as cdkp from '@aws-cdk/pipelines';
-import * as cb from '@aws-cdk/aws-codebuild';
 import * as cp from '@aws-cdk/aws-codepipeline';
 import * as cpa from '@aws-cdk/aws-codepipeline-actions';
+import * as sns from '@aws-cdk/aws-sns';
 
 export class TestCicdStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -28,26 +28,27 @@ export class TestCicdStack extends cdk.Stack {
       }),
     });
 
-    const codePipeline = pipeline.node.findChild('Pipeline') as cp.Pipeline;
-
-    const project = new cb.Project(this, 'Bla', {
-      buildSpec: cb.BuildSpec.fromObject({
-        version: '0.2',
-        phases: {
-          build: {
-            commands: ['echo "Vroom vroom"'],
-          },
-        },
-      }),
-    });
-
-    codePipeline.stages[1].addAction(new cpa.CodeBuildAction({
-      actionName: 'DoBla',
-      input: sourceArtifact,
-      project,
-      environmentVariables: {
-        SOME_VARIABLE_VARIABLE: { value: new Date().toString() },
+    pipeline.addApplicationStage(new SomeStage(this, 'Steesj', {
+      env: {
+        account: '561462023695',
+        region: 'us-east-2',
       },
     }));
+  }
+}
+
+class SomeStage extends cdk.Stage {
+  constructor(scope: cdk.Construct, id: string, props?: cdk.StageProps) {
+    super(scope, id, props);
+
+    new SomeStack(this, 'TopicStack');
+  }
+}
+
+class SomeStack extends cdk.Stack {
+  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+    super(scope, id, props);
+
+    new sns.Topic(this, 'Topic');
   }
 }
