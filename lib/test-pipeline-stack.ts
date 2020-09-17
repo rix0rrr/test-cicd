@@ -42,5 +42,12 @@ export class TestPipelineStack extends cdk.Stack {
         account: '561462023695',
       },
     }));
+
+    pipeline.addApplicationStage(new TestCicdStage(this, 'CrossAcctCrossReg', {
+      env: {
+        region: 'eu-west-2',
+        account: '561462023695',
+      },
+    }));
   }
 }
