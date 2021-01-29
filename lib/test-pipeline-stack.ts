@@ -38,7 +38,7 @@ export class TestPipelineStack extends cdk.Stack {
 
     pipeline.addApplicationStage(new TestCicdStage(this, 'CrossReg', {
       env: {
-        region: 'eu-west-2',
+        region: 'eu-central-1',
       },
     }));
   }
