@@ -9,7 +9,6 @@ export class MyStage extends Stage {
   constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props);
 
-    new FileLambdaStack(this, 'FileLambda');
     new ContainerLambdaStack(this, 'ContainerLambda');
   }
 }
