@@ -2,10 +2,9 @@ import * as cdk from '@aws-cdk/core';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
 import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
-import { TestCicdStage } from './test-cicd-stack';
+import { MyStage } from './my-stage';
 
-
-export class TestPipelineStack extends cdk.Stack {
+export class PipelineStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -14,31 +13,44 @@ export class TestPipelineStack extends cdk.Stack {
 
     const pipeline = new CdkPipeline(this, 'Pipeline', {
       // The pipeline name
-      pipelineName: 'SomeTestingPipeline',
+      pipelineName: 'TestingPipeline',
       cloudAssemblyArtifact,
 
       // Where the source can be found
       sourceAction: new codepipeline_actions.GitHubSourceAction({
+        owner: 'rix0rrr',
+        repo: 'test-cicd',
+
+        // This is actually less interesting detail we're working to get rid of
         actionName: 'GitHub',
         output: sourceArtifact,
         oauthToken: cdk.SecretValue.secretsManager('github-token'),
-        owner: 'rix0rrr',
-        repo: 'test-cicd',
       }),
 
        // How it will be built and synthesized
        synthAction: SimpleSynthAction.standardNpmSynth({
+         // We need a build step to compile the TypeScript Lambda
+         buildCommand: 'npm run build',
+
          sourceArtifact,
          cloudAssemblyArtifact,
-
-         // We need a build step to compile the TypeScript Lambda
-         buildCommand: 'npm run build'
        }),
     });
 
-    pipeline.addApplicationStage(new TestCicdStage(this, 'CrossReg', {
+    //----------------------------------------------------------------------
+    //   APPLICATION STAGES
+    //
+
+    pipeline.addApplicationStage(new MyStage(this, 'CrossReg', {
       env: {
         region: 'eu-central-1',
+      },
+    }));
+
+    pipeline.addApplicationStage(new MyStage(this, 'CrossRegAndAccount', {
+      env: {
+        region: 'eu-central-1',
+        account: '561462023695'
       },
     }));
   }
