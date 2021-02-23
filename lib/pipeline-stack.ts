@@ -41,6 +41,8 @@ export class PipelineStack extends cdk.Stack {
     //   APPLICATION STAGES
     //
 
+    pipeline.addApplicationStage(new MyStage(this, 'InEnvironment'));
+
     pipeline.addApplicationStage(new MyStage(this, 'CrossReg', {
       env: {
         region: 'eu-central-1',

@@ -10,5 +10,6 @@ export class MyStage extends Stage {
     super(scope, id, props);
 
     new ContainerLambdaStack(this, 'ContainerLambda');
+    new FileLambdaStack(this, 'FileLambda');
   }
 }
