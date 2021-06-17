@@ -3,6 +3,7 @@ import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
 import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import { MyStage } from './my-stage';
+import { TrivialStage } from './trivial-stack';
 
 export class PipelineStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -41,21 +42,6 @@ export class PipelineStack extends cdk.Stack {
     //   APPLICATION STAGES
     //
 
-    pipeline.addApplicationStage(new MyStage(this, 'InEnvironment'));
-
-    pipeline.addApplicationStage(new MyStage(this, 'InEnvironment2'));
-
-    pipeline.addApplicationStage(new MyStage(this, 'CrossReg', {
-      env: {
-        region: 'eu-central-1',
-      },
-    }));
-
-    pipeline.addApplicationStage(new MyStage(this, 'CrossRegAndAccount', {
-      env: {
-        region: 'eu-central-1',
-        account: '561462023695'
-      },
-    }));
+    pipeline.addApplicationStage(new TrivialStage(this, 'InEnvironment'));
   }
 }
