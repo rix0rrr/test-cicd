@@ -43,5 +43,9 @@ export class PipelineStack extends cdk.Stack {
     //
 
     pipeline.addApplicationStage(new TrivialStage(this, 'InEnvironment'));
+
+    pipeline.addApplicationStage(new TrivialStage(this, 'CrossRegion', {
+      env: { region: 'us-east-2' },
+    }));
   }
 }

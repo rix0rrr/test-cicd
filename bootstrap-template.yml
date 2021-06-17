@@ -378,6 +378,18 @@ Resources:
       Policies:
         - PolicyDocument:
             Statement:
+              - Sid: ReadStagingBucket
+                Effect: Allow
+                Action:
+                  - s3:GetObject*
+                  - s3:GetBucket*
+                  - s3:List*
+                  - s3:DeleteObject*
+                  - s3:PutObject*
+                  - s3:Abort*
+                Resource:
+                  - Fn::Sub: ${StagingBucket.Arn}
+                  - Fn::Sub: ${StagingBucket.Arn}/*
               - Action:
                   - cloudformation:CreateChangeSet
                   - cloudformation:DeleteChangeSet
