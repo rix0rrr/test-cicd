@@ -47,5 +47,18 @@ export class PipelineStack extends cdk.Stack {
     pipeline.addApplicationStage(new TrivialStage(this, 'CrossRegion', {
       env: { region: 'us-east-2' },
     }));
+
+    pipeline.addApplicationStage(new TrivialStage(this, 'XAcct', {
+      env: {
+        account: '561462023695',
+      },
+    }));
+
+    pipeline.addApplicationStage(new TrivialStage(this, 'XAcctXRegion', {
+      env: {
+        account: '561462023695',
+        region: 'us-east-2',
+      },
+    }));
   }
 }
