@@ -11,6 +11,7 @@ export class TrivialStack extends Stack {
 
     const topic = new sns.Topic(this, 'Topic');
     topic.grantPublish(new iam.AccountRootPrincipal());
+    topic.grantPublish(new iam.AccountPrincipal('561462023695'));
   }
 }
 
