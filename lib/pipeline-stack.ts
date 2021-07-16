@@ -12,6 +12,8 @@ export class PipelineStack extends cdk.Stack {
       // The pipeline name
       pipelineName: 'TestingPipeline',
 
+      crossAccountKeys: true,
+
       // Where the source can be found
       synth: new ShellStep('Synth', {
         input: CodePipelineSource.gitHub('rix0rrr/test-cicd', 'master'),
