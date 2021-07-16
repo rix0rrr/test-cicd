@@ -1,60 +1,45 @@
 import * as cdk from '@aws-cdk/core';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
-import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines';
+import { CdkPipeline, CodePipeline, CodePipelineSource, ShellScriptAction, ShellStep, SimpleSynthAction } from '@aws-cdk/pipelines';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
-import { MyStage } from './my-stage';
 import { TrivialStage } from './trivial-stack';
 
 export class PipelineStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const sourceArtifact = new codepipeline.Artifact();
-    const cloudAssemblyArtifact = new codepipeline.Artifact();
-
-    const pipeline = new CdkPipeline(this, 'Pipeline', {
+    const pipeline = new CodePipeline(this, 'Pipeline', {
       // The pipeline name
       pipelineName: 'TestingPipeline',
-      cloudAssemblyArtifact,
 
       // Where the source can be found
-      sourceAction: new codepipeline_actions.GitHubSourceAction({
-        owner: 'rix0rrr',
-        repo: 'test-cicd',
-
-        // This is actually less interesting detail we're working to get rid of
-        actionName: 'GitHub',
-        output: sourceArtifact,
-        oauthToken: cdk.SecretValue.secretsManager('github-token'),
+      synth: new ShellStep('Synth', {
+        input: CodePipelineSource.gitHub('rix0rrr/test-cicd', 'master'),
+        commands: [
+          'npm ci',
+          'npm run build',
+          'npx cdk synth',
+        ]
       }),
-
-       // How it will be built and synthesized
-       synthAction: SimpleSynthAction.standardNpmSynth({
-         // We need a build step to compile the TypeScript Lambda
-         buildCommand: 'npm run build',
-
-         sourceArtifact,
-         cloudAssemblyArtifact,
-       }),
     });
 
     //----------------------------------------------------------------------
     //   APPLICATION STAGES
     //
 
-    pipeline.addApplicationStage(new TrivialStage(this, 'InEnvironment'));
+    pipeline.addStage(new TrivialStage(this, 'InEnvironment'));
 
-    pipeline.addApplicationStage(new TrivialStage(this, 'CrossRegion', {
+    pipeline.addStage(new TrivialStage(this, 'CrossRegion', {
       env: { region: 'us-east-2' },
     }));
 
-    pipeline.addApplicationStage(new TrivialStage(this, 'XAcct', {
+    pipeline.addStage(new TrivialStage(this, 'XAcct', {
       env: {
         account: '561462023695',
       },
     }));
 
-    pipeline.addApplicationStage(new TrivialStage(this, 'XAcctXRegion', {
+    pipeline.addStage(new TrivialStage(this, 'XAcctXRegion', {
       env: {
         account: '561462023695',
         region: 'us-east-2',
