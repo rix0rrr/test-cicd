@@ -1,4 +1,5 @@
 import * as sns from '@aws-cdk/aws-sns';
+import * as iam from '@aws-cdk/aws-iam';
 import { Construct, Stack, StackProps, Stage, StageProps } from '@aws-cdk/core';
 
 /**
@@ -8,7 +9,8 @@ export class TrivialStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    new sns.Topic(this, 'Topic');
+    const topic = new sns.Topic(this, 'Topic');
+    topic.grantPublish(new iam.AccountRootPrincipal());
   }
 }
 
