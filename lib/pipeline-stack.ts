@@ -29,14 +29,17 @@ export class PipelineStack extends cdk.Stack {
     //   APPLICATION STAGES
     //
 
-    pipeline.addStage(new TrivialStage(this, 'InEnvironment'));
+    const stage = new TrivialStage(this, 'InEnvironment', {
+      env: { region: 'eu-west-1', account: '355421412380' },
+    });
 
     pipeline.addStage(new TrivialStage(this, 'CrossRegion', {
-      env: { region: 'us-east-2' },
+      env: { region: 'us-east-2', account: '355421412380' },
     }));
 
     pipeline.addStage(new TrivialStage(this, 'XAcct', {
       env: {
+        region: 'eu-west-1',
         account: '561462023695',
       },
     }));
