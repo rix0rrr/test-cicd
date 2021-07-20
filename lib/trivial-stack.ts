@@ -1,3 +1,4 @@
+import * as ec2 from '@aws-cdk/aws-ec2';
 import * as sns from '@aws-cdk/aws-sns';
 import * as iam from '@aws-cdk/aws-iam';
 import { Construct, Stack, StackProps, Stage, StageProps } from '@aws-cdk/core';
@@ -8,6 +9,8 @@ import { Construct, Stack, StackProps, Stage, StageProps } from '@aws-cdk/core';
 export class TrivialStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
+
+    ec2.Vpc.fromLookup(this, 'Vpc', { isDefault: true });
 
     const topic = new sns.Topic(this, 'Topic');
     topic.grantPublish(new iam.AccountRootPrincipal());
