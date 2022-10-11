@@ -1,7 +1,9 @@
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as sns from '@aws-cdk/aws-sns';
-import * as iam from '@aws-cdk/aws-iam';
-import { Construct, Stack, StackProps, Stage, StageProps } from '@aws-cdk/core';
+import { Construct } from 'constructs';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import * as sns from 'aws-cdk-lib/aws-sns';
+import * as iam from 'aws-cdk-lib/aws-iam';
+import { Stack, StackProps, Stage, StageProps } from 'aws-cdk-lib';
+import { FileLambdaStack } from './file-lambda-stack';
 
 /**
  * A stack for our simple Lambda-powered web service
@@ -26,5 +28,6 @@ export class TrivialStage extends Stage {
     super(scope, id, props);
 
     new TrivialStack(this, 'TrivialStack');
+    new FileLambdaStack(this, 'Filezzz');
   }
 }

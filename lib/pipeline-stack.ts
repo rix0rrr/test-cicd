@@ -1,11 +1,12 @@
-import * as cdk from '@aws-cdk/core';
-import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
-import { CdkPipeline, CodePipeline, CodePipelineSource, ShellScriptAction, ShellStep, SimpleSynthAction } from '@aws-cdk/pipelines';
-import * as codepipeline from '@aws-cdk/aws-codepipeline';
+import * as cdk from 'aws-cdk-lib';
+import * as constructs from 'constructs';
+import * as codepipeline_actions from 'aws-cdk-lib/aws-codepipeline-actions';
+import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
+import * as codepipeline from 'aws-cdk-lib/aws-codepipeline';
 import { TrivialStage } from './trivial-stack';
 
 export class PipelineStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: constructs.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     const pipeline = new CodePipeline(this, 'Pipeline', {

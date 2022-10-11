@@ -1,4 +1,5 @@
-import { CfnOutput, Construct, Stage, StageProps } from '@aws-cdk/core';
+import { Construct } from 'constructs';
+import { Stage, StageProps } from 'aws-cdk-lib';
 import { ContainerLambdaStack } from './container-lambda-stack';
 import { FileLambdaStack } from './file-lambda-stack';
 

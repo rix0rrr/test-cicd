@@ -1,6 +1,7 @@
-import * as apigw from '@aws-cdk/aws-apigateway';
-import * as lambda from '@aws-cdk/aws-lambda';
-import { CfnOutput, Construct, Stack, StackProps } from '@aws-cdk/core';
+import { Construct } from 'constructs';
+import * as apigw from 'aws-cdk-lib/aws-apigateway';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import { CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
 import * as path from 'path';
 
 /**
