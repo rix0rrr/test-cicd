@@ -19,8 +19,8 @@ export class PipelineStack extends cdk.Stack {
       synth: new ShellStep('Synth', {
         input: CodePipelineSource.gitHub('rix0rrr/test-cicd', 'master'),
         commands: [
-          'npm ci',
-          'npm run build',
+          'yarn install --frozen-lockfile',
+          'yarn build',
           'npx cdk synth',
         ]
       }),
