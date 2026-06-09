@@ -29,11 +29,11 @@ export class ScenarioStack extends cdk.Stack {
     void cluster;
 
     new InvalidResourceProps(this, 'Props');
-    new AutoImportWrongRetention(this, 'AutoImportWrongRetention')
-    new ExitOnStartup(this, 'ExitOnStartup', { cluster });
-    new EcsHealthCheckFailure(this, 'HealthCheck', { cluster, vpc });
-    new EcsImagePullFailure(this, 'ImagePull', { cluster });
-    new EcsNoCwLogging(this, 'NoLogging', { cluster });
-    new EcsOomKilled(this, 'Oom', { cluster });
+    // new AutoImportWrongRetention(this, 'AutoImportWrongRetention')
+    // new ExitOnStartup(this, 'ExitOnStartup', { cluster });
+    // new EcsHealthCheckFailure(this, 'HealthCheck', { cluster, vpc });
+    // new EcsImagePullFailure(this, 'ImagePull', { cluster });
+    // new EcsNoCwLogging(this, 'NoLogging', { cluster });
+    // new EcsOomKilled(this, 'Oom', { cluster });
   }
 }
