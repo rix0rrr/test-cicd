@@ -1,4 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
+import * as cbuild from 'aws-cdk-lib/aws-codebuild';
 import { Construct } from 'constructs';
 import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
 import { ScenarioStage } from './scenario';
@@ -12,6 +13,12 @@ export class PipelineStack extends cdk.Stack {
       pipelineName: 'TestingPipeline',
 
       crossAccountKeys: true,
+
+      codeBuildDefaults: {
+        buildEnvironment: {
+          buildImage: cbuild.LinuxBuildImage.fromCodeBuildImageId('aws/codebuild/amazonlinux-x86_64-standard:6.0'),
+        }
+      },
 
       // Where the source can be found
       synth: new ShellStep('Synth', {
