@@ -5,7 +5,7 @@ import * as ecs from 'aws-cdk-lib/aws-ecs';
 import { Construct } from 'constructs';
 import { InvalidResourceProps } from './scenarios/invalid-resource-props/invalid-resource-props';
 import { AutoImportWrongRetention } from './scenarios/autoimport-wrong-retention/autoimport-wrong-retention';
-import { ExitOnStartup } from './scenarios/ecs-exit-on-startup/ecs-exit-on-startup';
+import { EcsExitOnStartup } from './scenarios/ecs-exit-on-startup/ecs-exit-on-startup';
 import { EcsHealthCheckFailure } from './scenarios/ecs-health-check-failure/ecs-health-check-failure';
 import { EcsImagePullFailure } from './scenarios/ecs-image-pull-failure/ecs-image-pull-failure';
 import { EcsNoCwLogging } from './scenarios/ecs-no-cw-logging/ecs-no-cw-logging';
@@ -28,9 +28,9 @@ export class ScenarioStack extends cdk.Stack {
     const cluster = new ecs.Cluster(this, 'Cluster', { vpc });
     void cluster;
 
-    new InvalidResourceProps(this, 'Props');
+    // new InvalidResourceProps(this, 'Props');
     // new AutoImportWrongRetention(this, 'AutoImportWrongRetention')
-    // new ExitOnStartup(this, 'ExitOnStartup', { cluster });
+    new EcsExitOnStartup(this, 'ExitOnStartup', { cluster });
     // new EcsHealthCheckFailure(this, 'HealthCheck', { cluster, vpc });
     // new EcsImagePullFailure(this, 'ImagePull', { cluster });
     // new EcsNoCwLogging(this, 'NoLogging', { cluster });

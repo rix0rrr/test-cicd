@@ -6,7 +6,7 @@ export interface ExitOnStartupProps {
   cluster: ecs.ICluster;
 }
 
-export class ExitOnStartup extends Construct {
+export class EcsExitOnStartup extends Construct {
   constructor(scope: Construct, id: string, props: ExitOnStartupProps) {
     super(scope, id);
 
