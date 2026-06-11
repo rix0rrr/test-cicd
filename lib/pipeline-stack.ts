@@ -3,6 +3,7 @@ import * as cbuild from 'aws-cdk-lib/aws-codebuild';
 import { Construct } from 'constructs';
 import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
 import { ScenarioStage } from './scenario';
+import { PolicyStatement } from 'aws-cdk-lib/aws-iam';
 
 export class PipelineStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -30,6 +31,68 @@ export class PipelineStack extends cdk.Stack {
         ]
       }),
     });
+
+    pipeline.pipeline.addToRolePolicy(new PolicyStatement({
+      sid: "CloudWatchWriteAccess",
+      actions: [
+        "logs:CreateLogGroup",
+        "logs:PutRetentionPolicy"
+      ],
+      resources: ["arn:aws:logs:*:*:log-group:/aws/codepipeline/*"],
+    }));
+
+    pipeline.pipeline.addToRolePolicy(new PolicyStatement({
+      "sid": "CloudWatchReadOnlyAccess",
+      actions: [
+        "logs:DescribeLogStreams",
+        "logs:DescribeLogGroups",
+        "logs:GetLogEvents",
+        "logs:FilterLogEvents"
+      ],
+      "resources": ["*"],
+    }));
+
+    pipeline.pipeline.addToRolePolicy(new PolicyStatement({
+      "sid": "CloudFormationReadOnlyAccess",
+      "actions": [
+        "cloudformation:DescribeStacks",
+        "cloudformation:DescribeStackEvents",
+        "cloudformation:DescribeStackResources",
+        "cloudformation:DescribeChangeSet",
+        "cloudformation:GetTemplate",
+        "cloudformation:ValidateTemplate"
+      ],
+      "resources": ["*"],
+    }));
+
+    pipeline.pipeline.addToRolePolicy(new PolicyStatement({
+      "sid": "QDiagnoseConsoleErrorsAccess",
+      "actions": [
+        "q:GetTroubleshootingResults",
+        "q:StartTroubleshootingAnalysis",
+        "q:StartTroubleshootingResolutionExplanation"
+      ],
+      "resources": ["*"],
+    }));
+
+    pipeline.pipeline.addToRolePolicy(new PolicyStatement({
+      "sid": "CodeBuildReadOnlyAccess",
+      "actions": [
+        "codebuild:BatchGetBuilds"
+      ],
+      "resources": ["*"],
+    }));
+
+    pipeline.pipeline.addToRolePolicy(new PolicyStatement({
+      "sid": "CodePipelineReadOnlyAccess",
+      "actions": [
+        "codepipeline:GetPipeline",
+        "codepipeline:GetPipelineExecution",
+        "codepipeline:GetPipelineState",
+        "codepipeline:ListActionExecutions"
+      ],
+      "resources": ["*"],
+    }));
 
     pipeline.addStage(new ScenarioStage(this, 'TheStage'));
   }
