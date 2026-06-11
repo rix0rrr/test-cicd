@@ -32,6 +32,10 @@ export class PipelineStack extends cdk.Stack {
       }),
     });
 
+    pipeline.addStage(new ScenarioStage(this, 'TheStage'));
+
+    pipeline.buildPipeline();
+
     pipeline.pipeline.addToRolePolicy(new PolicyStatement({
       sid: "CloudWatchWriteAccess",
       actions: [
@@ -94,7 +98,6 @@ export class PipelineStack extends cdk.Stack {
       "resources": ["*"],
     }));
 
-    pipeline.addStage(new ScenarioStage(this, 'TheStage'));
   }
 }
 
