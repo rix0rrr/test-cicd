@@ -31,8 +31,8 @@ export class ScenarioStack extends cdk.Stack {
 
     // new InvalidResourceProps(this, 'Props');
     // new AutoImportWrongRetention(this, 'AutoImportWrongRetention')
-    new CircularDependencies(this, 'Circs', { vpc });
-    // new EcsExitOnStartup(this, 'ExitOnStartup', { cluster });
+    // new CircularDependencies(this, 'Circs', { vpc });
+    new EcsExitOnStartup(this, 'ExitOnStartup', { cluster });
     // new EcsHealthCheckFailure(this, 'HealthCheck', { cluster, vpc });
     // new EcsImagePullFailure(this, 'ImagePull', { cluster });
     // new EcsNoCwLogging(this, 'NoLogging', { cluster });
