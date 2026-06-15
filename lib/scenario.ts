@@ -33,8 +33,8 @@ export class ScenarioStack extends cdk.Stack {
     // new AutoImportWrongRetention(this, 'AutoImportWrongRetention')
     // new CircularDependencies(this, 'Circs', { vpc });
     // new EcsExitOnStartup(this, 'ExitOnStartup', { cluster });
-    new EcsHealthCheckFailure(this, 'HealthCheck', { cluster, vpc });
-    // new EcsImagePullFailure(this, 'ImagePull', { cluster });
+    // new EcsHealthCheckFailure(this, 'HealthCheck', { cluster, vpc });
+    new EcsImagePullFailure(this, 'ImagePull', { cluster });
     // new EcsNoCwLogging(this, 'NoLogging', { cluster });
     // new EcsOomKilled(this, 'Oom', { cluster });
   }
