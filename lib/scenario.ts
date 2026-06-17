@@ -35,7 +35,7 @@ export class ScenarioStack extends cdk.Stack {
     // new EcsExitOnStartup(this, 'ExitOnStartup', { cluster });
     // new EcsHealthCheckFailure(this, 'HealthCheck', { cluster, vpc });
     // new EcsImagePullFailure(this, 'ImagePull', { cluster });
-    new EcsNoCwLogging(this, 'NoLogging', { cluster });
-    // new EcsOomKilled(this, 'Oom', { cluster });
+    // new EcsNoCwLogging(this, 'NoLogging', { cluster });
+    new EcsOomKilled(this, 'Oom', { cluster });
   }
 }
